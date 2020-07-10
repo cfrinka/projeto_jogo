@@ -7,7 +7,7 @@
 	<title>Projeto de Joguinho Bobo</title>
 	<style>
 		#screen {
-			border: 1px solid #cccccc;
+			border: 10px solid #cccccc;
             image-rendering: pixelated;
             image-rendering: crisp-edges;
             image-rendering: -moz-crisp-edges;
@@ -25,42 +25,72 @@
 	<script>
 		const screen = document.getElementById('screen')
         const context = screen.getContext('2d')
+        const currentPlayerId = 'player1'
 
         const game = {
             players: {
                 'player1': { x:1, y:1},
-                'player2': { x:9, y:1}
+                'player2': { x:9, y:9}
             },
             fruits: {
                 'fruit1': { x:3, y:1}
             }
         }
 
+        document.addEventListener('keydown', handleKeydown)
+
+        function handleKeydown(event){
+            const keyPressed = event.key
+            const player = game.players[currentPlayerId]
+            
+            if (keyPressed === 'ArrrowUp'){
+                player.y = player.y - 1
+                return
+            }
+
+            if (keyPressed === 'ArrrowDown'){
+                player.y = player.y +1
+                return
+            }
+
+            if (keyPressed === 'ArrrowRight'){
+                player.x = player.x + 1
+                return
+            }
+
+            if (keyPressed === 'ArrrowLeft'){
+                player.x = player.x - 1
+                return
+            }
+
+
+
+        }
+
         renderScreen()
 
         function renderScreen(){
-            for (playerID in game.players){
+            context.fillStyle = 'white'
+            context.clearRect(0, 0, 10, 10)
+
+
+            for (const playerID in game.players){
                 const player = game.players[playerID]
                 context.fillStyle = 'black'
                 context.fillRect(player.x, player.y, 1, 1)
             }
 
-            for (fruitId in game.fruits){
+            for (const fruitId in game.fruits){
                 const fruit = game.fruits[fruitId]
                 context.fillStyle = 'green'
                 context.fillRect(fruit.x, fruit.y, 1, 1)
             }
+            
+            requestAnimationFrame(renderScreen)
         }
         
 
-        const color = 'red'
-        const positionX = 0
-        const positionY = 0
-        const width = 250
-        const height = 250
-
-
-        
+                
 	</script>
 </body>
 
